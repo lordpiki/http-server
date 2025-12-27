@@ -6,7 +6,7 @@ std::string HTTPMessage::to_string()
 
     std::string message;
     
-    message += m_start_line + '\n';
+    message += m_startline + '\n';
 
     for (const auto& header : m_headers)
     {
