@@ -124,6 +124,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="http-server.cpp" />
+    <ClCompile Include="HTTPException.cpp" />
+    <ClCompile Include="HTTPMessage.cpp" />
+    <ClCompile Include="HTTPParser.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="HTTPException.h" />
+    <ClInclude Include="HTTPMessage.h" />
+    <ClInclude Include="HTTPParser.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

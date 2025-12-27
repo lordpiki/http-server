@@ -9,6 +9,9 @@
 const int PORT = 8080;
 const int MAX_BUFFER = 1024;
 
+#include "HTTPMessage.h"
+#include "HTTPParser.h"
+
 void handleClient(SOCKET clientSock, sockaddr_in clientAddr) {
     char buf[MAX_BUFFER];
     char clientIP[INET_ADDRSTRLEN];
@@ -16,10 +19,6 @@ void handleClient(SOCKET clientSock, sockaddr_in clientAddr) {
     int clientPort = ntohs(clientAddr.sin_port);
 
     std::cout << "New connection from " << clientIP << ":" << clientPort << std::endl;
-
-    // Send welcome message
-    const char* welcome = "Welcome to the server!\r\n";
-    send(clientSock, welcome, (int)strlen(welcome), 0);
 
     // Handle client messages
     while (true) {
@@ -31,7 +30,17 @@ void handleClient(SOCKET clientSock, sockaddr_in clientAddr) {
             break;
         }
 
-        std::cout << "Received from " << clientIP << ": " << buf;
+        try
+        {
+
+            HTTPMessage message = HTTPParser::parse(std::string(buf));
+            std::cout << message.to_string() << std::endl;
+        }
+        catch (const HTTPException& e)
+        {
+            std::cout << "Error in parsing message: " << e.what() << std::endl;
+        }
+
 
         // Echo back to client
         std::string response = "Echo: " + std::string(buf);
