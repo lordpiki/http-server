@@ -127,12 +127,14 @@
     <ClCompile Include="HTTPException.cpp" />
     <ClCompile Include="HTTPMessage.cpp" />
     <ClCompile Include="HTTPParser.cpp" />
+    <ClCompile Include="HTTPRequest.cpp" />
     <ClCompile Include="HTTPResponse.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HTTPException.h" />
     <ClInclude Include="HTTPMessage.h" />
     <ClInclude Include="HTTPParser.h" />
+    <ClInclude Include="HTTPRequest.h" />
     <ClInclude Include="HTTPResponse.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
