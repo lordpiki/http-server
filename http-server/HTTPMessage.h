@@ -3,14 +3,19 @@
 #include <utility>
 #include <unordered_map>
 
+static constexpr char HTTP_VERSION[] = "HTTP/1.1";
+
+
 class HTTPMessage
 {
 public:
 
+	HTTPMessage() = default;
 	HTTPMessage(const std::string& start_line, const std::unordered_map<std::string, std::string>& headers, const std::string& body) : 
 		m_startline(start_line),
 		m_headers(headers),
 		m_body(body) {};
+
 
 	std::string to_string();
 

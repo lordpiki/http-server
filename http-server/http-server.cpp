@@ -11,6 +11,7 @@ const int MAX_BUFFER = 1024;
 
 #include "HTTPMessage.h"
 #include "HTTPParser.h"
+#include "HTTPResponse.h"
 
 void handleClient(SOCKET clientSock, sockaddr_in clientAddr) {
     char buf[MAX_BUFFER];
@@ -25,26 +26,31 @@ void handleClient(SOCKET clientSock, sockaddr_in clientAddr) {
         memset(buf, 0, MAX_BUFFER);
         int bytesRead = recv(clientSock, buf, MAX_BUFFER - 1, 0);
 
+        HTTPResponse response("Hello World");
+
         if (bytesRead <= 0) {
             std::cout << "Client " << clientIP << ":" << clientPort << " disconnected" << std::endl;
             break;
         }
 
+        std::cout << "Got message " << buf << std::endl;
+
         try
         {
 
             HTTPMessage message = HTTPParser::parse(std::string(buf));
-            std::cout << message.to_string() << std::endl;
+            //std::cout << message.to_string() << std::endl;
         }
         catch (const HTTPException& e)
         {
             std::cout << "Error in parsing message: " << e.what() << std::endl;
         }
 
+        auto resp_string = response.to_string();
 
-        // Echo back to client
-        std::string response = "Echo: " + std::string(buf);
-        send(clientSock, response.c_str(), (int)response.length(), 0);
+        std::cout << "Rplying with " << resp_string << std::endl;
+
+        send(clientSock, resp_string.c_str(), resp_string.length(), 0);
     }
 
     closesocket(clientSock);
