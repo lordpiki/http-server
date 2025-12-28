@@ -20,9 +20,9 @@ public:
 	std::string to_string();
 
 	// Getters
-	std::string get_startline() { return m_startline; }
-	std::string get_header(const std::string& header) { return m_headers[header]; }
-	std::string get_body() { return m_body; }
+	std::string get_startline() const { return m_startline; }
+	std::string get_header(const std::string& header) const { return m_headers.at(header); }
+	std::string get_body() const { return m_body; }
 
 protected:
 

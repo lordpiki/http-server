@@ -9,9 +9,9 @@
 const int PORT = 8080;
 const int MAX_BUFFER = 1024;
 
-#include "HTTPMessage.h"
 #include "HTTPParser.h"
 #include "HTTPResponse.h"
+#include "HTTPRequestFactory.h"
 
 void handleClient(SOCKET clientSock, sockaddr_in clientAddr) {
     char buf[MAX_BUFFER];
@@ -37,20 +37,21 @@ void handleClient(SOCKET clientSock, sockaddr_in clientAddr) {
 
         try
         {
-
             HTTPMessage message = HTTPParser::parse(std::string(buf));
-            //std::cout << message.to_string() << std::endl;
+            auto request = HTTPRequestFactory::get_request(message);
+            response = request->handle();
         }
         catch (const HTTPException& e)
         {
-            std::cout << "Error in parsing message: " << e.what() << std::endl;
+            std::cout << "Error in handling message: " << e.what() << std::endl;
+            response = HTTPResponse(e.status(), e.what(), "");
         }
 
         auto resp_string = response.to_string();
 
         std::cout << "Rplying with " << resp_string << std::endl;
 
-        send(clientSock, resp_string.c_str(), resp_string.length(), 0);
+        send(clientSock, resp_string.c_str(), static_cast<int>(resp_string.length()), 0);
     }
 
     closesocket(clientSock);

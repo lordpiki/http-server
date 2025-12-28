@@ -17,7 +17,9 @@ HTTPMessage HTTPParser::parse(const std::string& message)
     std::unordered_map<std::string, std::string> headers;
     std::string body;
 
-    std::stringstream ss(message);
+    std::string stripped_message = replace_crlf(message);
+
+    std::stringstream ss(stripped_message);
 
     // First line is the start line
     std::getline(ss, start_line, '\n');
@@ -25,7 +27,7 @@ HTTPMessage HTTPParser::parse(const std::string& message)
     std::string line;
 
     // Getting headers until there is a new line
-    while (std::getline(ss, line, '\n') and "\n" != line and "\r" != line)
+    while (std::getline(ss, line, '\n') and "\n" != line and not line.empty())
     {
         headers.insert(parse_header(line));
     }
@@ -81,4 +83,18 @@ std::string HTTPParser::trim(const std::string& s)
         --end;
 
     return s.substr(start, end - start);
+}
+
+std::string HTTPParser::replace_crlf(const std::string& s)
+{
+    std::string fixed = s;
+
+    for (std::size_t pos = 0;
+        (pos = fixed.find("\r\n", pos)) != std::string::npos;
+        ++pos)
+    {
+        fixed.replace(pos, 2, "\n");
+    }
+    
+    return fixed;
 }

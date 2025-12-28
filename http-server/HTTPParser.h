@@ -10,6 +10,7 @@ public:
 	static HTTPMessage parse(const std::string& message);
 	static std::pair<std::string, std::string> parse_header(const std::string& line);
 	static std::string trim(const std::string& s);
+	static std::string replace_crlf(const std::string& s);
 
 };
 

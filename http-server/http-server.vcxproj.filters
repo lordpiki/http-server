@@ -30,7 +30,10 @@
     <ClCompile Include="HTTPResponse.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="HTTPRequest.cpp">
+    <ClCompile Include="HTTPGetRequest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HTTPRequestFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -47,7 +50,10 @@
     <ClInclude Include="HTTPResponse.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="HTTPRequest.h">
+    <ClInclude Include="HTTPGetRequest.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HTTPRequestFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
